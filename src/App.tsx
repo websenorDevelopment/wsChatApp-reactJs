@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ChatList from "layouts/sidebar/ChatList";
+import "./app.css";
+import Routing from "routing/Routing";
+import SplashScreen from "layouts/SplashScreen";
+import { useEffect, useState } from "react";
+import appConfig from "config/appConfig";
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSplash(false);
+    }, appConfig.splashProgress);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {showSplash ? (
+        <SplashScreen />
+      ) : (
+        <div className="w-full h-full flex">
+          <ChatList />
+          <div className="flex-grow text-gray-400">
+            <Routing />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
